@@ -1,0 +1,1894 @@
+<title>Kimmy Resells</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap">
+
+<style>
+/* ==========================================
+   DESIGN TOKENS
+   ========================================== */
+:root {
+  --bg:           #FDF0F3;
+  --bg-alt:       #FAF5F7;
+  --bg-dark:      #2A1F22;
+  --cream:        #FDF8F5;
+  --white:        #FFFFFF;
+  --accent:       #C9617A;
+  --accent-dark:  #A04560;
+  --accent-soft:  #F2C4CF;
+  --accent-pale:  #FAE8EC;
+  --text:         #2A1F22;
+  --text-muted:   #7A5E65;
+  --text-light:   #B89CA2;
+  --border:       #EDD5DA;
+  --border-soft:  #F5E4E8;
+
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+
+  --space-xs:   4px;
+  --space-sm:   8px;
+  --space-md:   16px;
+  --space-lg:   24px;
+  --space-xl:   40px;
+  --space-2xl:  72px;
+  --space-3xl:  120px;
+
+  --radius-sm:  6px;
+  --radius:     12px;
+  --radius-lg:  20px;
+  --radius-xl:  32px;
+
+  --shadow-sm:  0 1px 3px rgba(42,31,34,0.06);
+  --shadow:     0 4px 16px rgba(42,31,34,0.08);
+  --shadow-lg:  0 12px 40px rgba(42,31,34,0.12);
+
+  --transition: 0.22s cubic-bezier(0.4,0,0.2,1);
+  --transition-slow: 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ==========================================
+   RESET & BASE
+   ========================================== */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  margin: 0;
+  padding-inline: 0;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+
+a { color: inherit; text-decoration: none; }
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+h1,h2,h3,h4 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.15;
+  text-wrap: balance;
+  margin: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ==========================================
+   TYPOGRAPHY SCALE
+   ========================================== */
+.t-display { font-size: clamp(2.8rem, 7vw, 5.5rem); font-weight: 300; letter-spacing: -0.02em; }
+.t-headline { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 400; }
+.t-title    { font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 400; }
+.t-label    { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; font-family: var(--font-body); }
+
+/* ==========================================
+   NAV
+   ========================================== */
+.nav {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 100;
+  background: rgba(253,240,243,0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-soft);
+  padding: 0 var(--space-xl);
+}
+
+.nav-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg);
+}
+
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  flex-shrink: 0;
+}
+
+.nav-logo span { color: var(--accent); }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color var(--transition);
+}
+
+.nav-links a:hover { color: var(--accent); }
+
+.nav-cta {
+  background: var(--accent);
+  color: var(--white) !important;
+  padding: 10px 22px;
+  border-radius: 100px;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.08em !important;
+  transition: background var(--transition), transform var(--transition) !important;
+  display: inline-block;
+}
+
+.nav-cta:hover {
+  background: var(--accent-dark) !important;
+  color: var(--white) !important;
+  transform: translateY(-1px);
+}
+
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: var(--transition);
+}
+
+.mobile-menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: var(--bg);
+  padding: 100px var(--space-xl) var(--space-xl);
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.mobile-menu.open { display: flex; }
+
+.mobile-menu a {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--text);
+  border-bottom: 1px solid var(--border-soft);
+  padding-bottom: var(--space-md);
+  transition: color var(--transition);
+}
+
+.mobile-menu a:hover { color: var(--accent); }
+
+.mobile-menu-close {
+  position: absolute;
+  top: 22px;
+  right: var(--space-xl);
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: var(--space-sm);
+}
+
+@media (max-width: 768px) {
+  .nav { padding: 0 var(--space-md); }
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+}
+
+/* ==========================================
+   HERO
+   ========================================== */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 88vh;
+  overflow: hidden;
+}
+
+.hero-image-col {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-image-col img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+.hero-content-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-3xl) var(--space-2xl) var(--space-3xl) var(--space-xl);
+  background: var(--cream);
+}
+
+.hero-eyebrow {
+  color: var(--accent);
+  margin-bottom: var(--space-lg);
+}
+
+.hero-headline {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 5vw, 5rem);
+  font-weight: 300;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: var(--space-lg);
+}
+
+.hero-headline em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.hero-sub {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 380px;
+  margin-bottom: var(--space-xl);
+}
+
+.hero-actions {
+  display: flex;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-2xl);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--white);
+  padding: 14px 30px;
+  border-radius: 100px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: background var(--transition), transform var(--transition);
+  display: inline-block;
+}
+
+.btn-primary:hover {
+  background: var(--accent-dark);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  border: 1.5px solid var(--accent);
+  color: var(--accent);
+  padding: 13px 28px;
+  border-radius: 100px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all var(--transition);
+  display: inline-block;
+}
+
+.btn-outline:hover {
+  background: var(--accent);
+  color: var(--white);
+}
+
+.hero-trust {
+  display: flex;
+  gap: var(--space-xl);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.hero-trust-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.hero-trust-item .label { color: var(--text-muted); }
+.hero-trust-item .val {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--text);
+}
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .hero-image-col {
+    height: 55vw;
+    min-height: 280px;
+  }
+
+  .hero-content-col {
+    padding: var(--space-xl) var(--space-md);
+  }
+}
+
+/* ==========================================
+   SECTION WRAPPER
+   ========================================== */
+.section {
+  padding-block: var(--space-3xl);
+  padding-inline: var(--space-xl);
+}
+
+.section-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.section-header {
+  margin-bottom: var(--space-2xl);
+}
+
+@media (max-width: 768px) {
+  .section { padding-block: var(--space-2xl); padding-inline: var(--space-md); }
+  .section-header { margin-bottom: var(--space-xl); }
+}
+
+/* ==========================================
+   TRENDING SECTION (editorial layout)
+   ========================================== */
+.trending {
+  background: var(--white);
+}
+
+.trending-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: var(--space-md);
+}
+
+.trending-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  background: var(--bg-alt);
+}
+
+.trending-card:first-child {
+  grid-row: span 2;
+}
+
+.trending-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+  display: block;
+}
+
+.trending-card:hover img { transform: scale(1.04); }
+
+.trending-card-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--space-lg);
+  background: linear-gradient(0deg, rgba(42,31,34,0.65) 0%, transparent 60%);
+}
+
+.trending-card-name {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+
+.trending-card-price {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.8);
+  font-weight: 500;
+}
+
+.trending-card-badge {
+  position: absolute;
+  top: var(--space-md);
+  left: var(--space-md);
+  background: var(--accent);
+  color: var(--white);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 100px;
+}
+
+@media (max-width: 768px) {
+  .trending-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .trending-card:first-child { grid-row: span 1; }
+  .trending-card { min-height: 220px; }
+}
+
+@media (max-width: 500px) {
+  .trending-grid { grid-template-columns: 1fr; }
+}
+
+/* ==========================================
+   SHOP SECTION
+   ========================================== */
+.shop { background: var(--bg); }
+
+.shop-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+  flex-wrap: wrap;
+}
+
+.filter-bar {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 8px 18px;
+  border-radius: 100px;
+  border: 1.5px solid var(--border);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: var(--white);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.filter-btn:hover, .filter-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--white);
+}
+
+.sort-select {
+  padding: 8px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  background: var(--white);
+  cursor: pointer;
+  outline: none;
+  transition: border-color var(--transition);
+}
+
+.sort-select:focus { border-color: var(--accent); }
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-lg);
+}
+
+@media (max-width: 1100px) { .product-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 768px)  { .product-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px)  { .product-grid { grid-template-columns: 1fr 1fr; gap: var(--space-sm); } }
+
+.product-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform var(--transition), box-shadow var(--transition);
+  border: 1px solid var(--border-soft);
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.product-card.hidden { display: none; }
+
+.product-img-wrap {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: var(--accent-pale);
+}
+
+.product-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.product-card:hover .product-img-wrap img { transform: scale(1.05); }
+
+.product-status {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 100px;
+}
+
+.status-available { background: var(--accent); color: var(--white); }
+.status-limited   { background: #F0B429; color: var(--white); }
+.status-sold      { background: #9E9E9E; color: var(--white); }
+
+.product-info {
+  padding: var(--space-md);
+}
+
+.product-category {
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.product-name {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.product-price {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent-dark);
+  margin-bottom: var(--space-md);
+}
+
+.product-btn {
+  width: 100%;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  background: var(--accent-pale);
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all var(--transition);
+  border: none;
+  cursor: pointer;
+}
+
+.product-btn:hover {
+  background: var(--accent);
+  color: var(--white);
+}
+
+/* ==========================================
+   PRODUCT MODAL
+   ========================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(42,31,34,0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition);
+}
+
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  width: 100%;
+  max-width: 820px;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  transform: translateY(20px);
+  transition: transform var(--transition);
+}
+
+.modal-overlay.open .modal { transform: translateY(0); }
+
+.modal-img-col {
+  position: relative;
+  background: var(--accent-pale);
+  border-radius: var(--radius-xl) 0 0 var(--radius-xl);
+  overflow: hidden;
+  min-height: 420px;
+}
+
+.modal-img-col img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal-content {
+  padding: var(--space-2xl) var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-md);
+}
+
+.modal-close {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--text-muted);
+  border: none;
+  transition: background var(--transition);
+  z-index: 1;
+}
+
+.modal-close:hover { background: var(--white); }
+
+.modal-cat { color: var(--accent); margin-bottom: 4px; }
+.modal-name {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: var(--text);
+}
+.modal-price { font-size: 1.4rem; font-weight: 600; color: var(--accent-dark); }
+.modal-desc { color: var(--text-muted); line-height: 1.7; font-size: 0.9rem; }
+
+.modal-avail {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.avail-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4CAF50;
+  flex-shrink: 0;
+}
+
+.modal-qty {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.qty-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition);
+  color: var(--text-muted);
+}
+
+.qty-btn:hover { border-color: var(--accent); color: var(--accent); }
+.qty-display { font-weight: 600; min-width: 24px; text-align: center; }
+
+.modal-cta {
+  background: var(--accent);
+  color: var(--white);
+  padding: 16px;
+  border-radius: var(--radius);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  transition: background var(--transition);
+  border: none;
+  cursor: pointer;
+  display: block;
+}
+
+.modal-cta:hover { background: var(--accent-dark); }
+
+.modal-note {
+  font-size: 0.78rem;
+  color: var(--text-light);
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .modal { grid-template-columns: 1fr; max-height: 95vh; }
+  .modal-img-col {
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    min-height: 260px;
+  }
+  .modal-content { padding: var(--space-lg) var(--space-md); }
+}
+
+/* ==========================================
+   ABOUT SECTION
+   ========================================== */
+.about {
+  background: var(--bg-dark);
+  color: var(--white);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: var(--space-2xl);
+  align-items: center;
+}
+
+.about-img-wrap {
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  aspect-ratio: 4/5;
+}
+
+.about-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-content { display: flex; flex-direction: column; gap: var(--space-lg); }
+
+.about-eyebrow { color: var(--accent-soft); }
+
+.about-headline {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1.1;
+}
+
+.about-headline em { font-style: italic; color: var(--accent-soft); }
+
+.about-body {
+  color: rgba(255,255,255,0.7);
+  line-height: 1.8;
+  font-size: 0.95rem;
+  max-width: 480px;
+}
+
+@media (max-width: 768px) {
+  .about-grid { grid-template-columns: 1fr; }
+  .about-img-wrap { aspect-ratio: 16/9; }
+}
+
+/* ==========================================
+   WHY SHOP (asymmetric layout)
+   ========================================== */
+.why { background: var(--cream); }
+
+.why-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+.why-big {
+  background: var(--accent-pale);
+  border-radius: var(--radius-xl);
+  padding: var(--space-2xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.why-big-icon { font-size: 2rem; }
+
+.why-big-title {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--text);
+}
+
+.why-big-body { color: var(--text-muted); line-height: 1.7; }
+
+.why-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.why-item {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg) var(--space-xl);
+  border: 1px solid var(--border-soft);
+}
+
+.why-item-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  margin-bottom: var(--space-xs);
+  color: var(--text);
+}
+
+.why-item-body { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; }
+
+@media (max-width: 768px) {
+  .why-layout { grid-template-columns: 1fr; }
+}
+
+/* ==========================================
+   INSTAGRAM SECTION
+   ========================================== */
+.instagram { background: var(--bg); }
+
+.insta-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: var(--space-xl);
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.insta-tiles {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xl);
+}
+
+.insta-tile {
+  aspect-ratio: 1;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--accent-pale);
+  cursor: pointer;
+  position: relative;
+}
+
+.insta-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.insta-tile:hover img { transform: scale(1.06); }
+
+.insta-tile-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(201,97,122,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--transition);
+  font-size: 1.4rem;
+  color: var(--white);
+}
+
+.insta-tile:hover .insta-tile-overlay { opacity: 1; }
+
+.insta-follow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.insta-follow a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background: var(--accent);
+  color: var(--white);
+  padding: 14px 32px;
+  border-radius: 100px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: background var(--transition), transform var(--transition);
+}
+
+.insta-follow a:hover {
+  background: var(--accent-dark);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .insta-tiles { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .insta-tiles { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ==========================================
+   POLICIES
+   ========================================== */
+.policies { background: var(--white); }
+
+.policies-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg);
+}
+
+.policy-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+}
+
+.policy-icon { font-size: 1.6rem; margin-bottom: var(--space-md); }
+
+.policy-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  margin-bottom: var(--space-sm);
+  color: var(--text);
+}
+
+.policy-body { font-size: 0.88rem; color: var(--text-muted); line-height: 1.75; }
+
+@media (max-width: 640px) {
+  .policies-grid { grid-template-columns: 1fr; }
+}
+
+/* ==========================================
+   CONTACT
+   ========================================== */
+.contact { background: var(--accent-pale); }
+
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: var(--space-2xl);
+  align-items: start;
+}
+
+.contact-info { display: flex; flex-direction: column; gap: var(--space-lg); }
+
+.contact-headline {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300;
+  color: var(--text);
+}
+
+.contact-handle {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.contact-body { color: var(--text-muted); line-height: 1.7; font-size: 0.9rem; }
+
+.contact-form {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.form-input {
+  padding: 12px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text);
+  background: var(--bg);
+  outline: none;
+  transition: border-color var(--transition);
+}
+
+.form-input:focus { border-color: var(--accent); }
+
+textarea.form-input { resize: vertical; min-height: 110px; }
+
+.form-submit {
+  background: var(--accent);
+  color: var(--white);
+  padding: 14px;
+  border-radius: var(--radius);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background var(--transition);
+  border: none;
+}
+
+.form-submit:hover { background: var(--accent-dark); }
+
+@media (max-width: 768px) {
+  .contact-layout { grid-template-columns: 1fr; }
+}
+
+/* ==========================================
+   FOOTER
+   ========================================== */
+.footer {
+  background: var(--bg-dark);
+  color: rgba(255,255,255,0.6);
+  padding: var(--space-2xl) var(--space-xl) var(--space-xl);
+}
+
+.footer-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-xl);
+  padding-bottom: var(--space-xl);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: var(--space-xl);
+  flex-wrap: wrap;
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.footer-logo {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--white);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+
+.footer-logo span { color: var(--accent-soft); }
+
+.footer-tagline { font-size: 0.82rem; max-width: 220px; line-height: 1.6; }
+
+.footer-links {
+  display: flex;
+  gap: var(--space-2xl);
+  flex-wrap: wrap;
+}
+
+.footer-col { display: flex; flex-direction: column; gap: var(--space-sm); }
+
+.footer-col-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 4px;
+}
+
+.footer-col a {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.6);
+  transition: color var(--transition);
+}
+
+.footer-col a:hover { color: var(--accent-soft); }
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.78rem;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.footer-insta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--accent-soft);
+  font-size: 0.82rem;
+  font-weight: 500;
+  transition: opacity var(--transition);
+}
+
+.footer-insta:hover { opacity: 0.8; }
+
+@media (max-width: 640px) {
+  .footer { padding-inline: var(--space-md); }
+  .footer-top { flex-direction: column; }
+}
+
+/* ==========================================
+   SCROLL REVEAL ANIMATION
+   ========================================== */
+.reveal {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-hidden {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.reveal-hidden.revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* ==========================================
+   DEMO BANNER
+   ========================================== */
+.demo-banner {
+  background: var(--accent);
+  color: var(--white);
+  text-align: center;
+  padding: 10px var(--space-md);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.demo-banner span { opacity: 0.8; font-weight: 400; }
+</style>
+
+<!-- DEMO BANNER -->
+<div class="demo-banner">
+  WEBSITE PREVIEW <span>- Demo products shown for visualization. Replace with real products before launch.</span>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#home" class="nav-logo">Kimmy <span>Resells</span></a>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#shop">Shop</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#policies">Policies</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#shop" class="nav-cta">Shop Now</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-menu-close" id="menuClose">&#x2715;</button>
+  <a href="#home" class="mobile-link">Home</a>
+  <a href="#shop" class="mobile-link">Shop</a>
+  <a href="#about" class="mobile-link">About</a>
+  <a href="#policies" class="mobile-link">Policies</a>
+  <a href="#contact" class="mobile-link">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-image-col" style="background:linear-gradient(160deg,#F2C4CF 0%,#C9617A 50%,#A04560 100%);display:flex;align-items:center;justify-content:center;">
+    <!-- Replace with brand hero photo -->
+    <div style="text-align:center;opacity:0.5;">
+      <div style="font-size:6rem;">&#128149;</div>
+      <p style="font-family:var(--font-display);font-size:1rem;color:#7A1530;letter-spacing:0.1em;margin-top:8px;">Add hero photo here</p>
+    </div>
+  </div>
+  <div class="hero-content-col">
+    <p class="t-label hero-eyebrow">Kimmy Resells</p>
+    <h1 class="hero-headline">Your Next <em>Favorite</em> Find</h1>
+    <p class="hero-sub">Curated finds, trending pieces, and products worth having.</p>
+    <div class="hero-actions">
+      <a href="#shop" class="btn-primary">Shop Products</a>
+      <a href="#contact" class="btn-outline">Contact Kimmy</a>
+    </div>
+    <div class="hero-trust">
+      <div class="hero-trust-item">
+        <span class="t-label label">Shipping</span>
+        <span class="val">Worldwide</span>
+      </div>
+      <div class="hero-trust-item">
+        <span class="t-label label">Delivery</span>
+        <span class="val">Meetups + Uber</span>
+      </div>
+      <div class="hero-trust-item">
+        <span class="t-label label">Order</span>
+        <span class="val">DM to Purchase</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRENDING NOW -->
+<section class="section trending">
+  <div class="section-inner">
+    <div class="section-header">
+      <p class="t-label" style="color:var(--accent);margin-bottom:8px;">Trending Right Now</p>
+      <h2 class="t-headline">The Picks Worth Having</h2>
+    </div>
+    <div class="trending-grid" id="trendingGrid">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- SHOP -->
+<section class="section shop" id="shop">
+  <div class="section-inner">
+    <div class="section-header">
+      <p class="t-label" style="color:var(--accent);margin-bottom:8px;">The Collection</p>
+      <h2 class="t-headline">Shop Everything</h2>
+    </div>
+    <div class="shop-controls">
+      <div class="filter-bar" id="filterBar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="bags">Bags</button>
+        <button class="filter-btn" data-filter="beauty">Beauty</button>
+        <button class="filter-btn" data-filter="jewelry">Jewelry</button>
+        <button class="filter-btn" data-filter="accessories">Accessories</button>
+        <button class="filter-btn" data-filter="clothing">Clothing</button>
+      </div>
+      <select class="sort-select" id="sortSelect">
+        <option value="featured">Featured</option>
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+      </select>
+    </div>
+    <div class="product-grid" id="productGrid">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section about" id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-img-wrap reveal-hidden" style="background:linear-gradient(160deg,#5A2030 0%,#A04560 50%,#C9617A 100%);display:flex;align-items:center;justify-content:center;">
+        <!-- Replace with brand photo -->
+        <div style="text-align:center;opacity:0.4;">
+          <div style="font-size:5rem;">&#128149;</div>
+          <p style="font-family:var(--font-display);font-size:0.85rem;color:#FAE8EC;letter-spacing:0.1em;margin-top:8px;">Add brand photo here</p>
+        </div>
+      </div>
+      <div class="about-content reveal-hidden">
+        <p class="t-label about-eyebrow">About Kimmy Resells</p>
+        <h2 class="about-headline">Curated with <em>care</em>, styled for you</h2>
+        <p class="about-body">
+          Kimmy Resells is a GTA-based reseller shop built around finding products worth owning. Every item in the collection is hand-selected with quality and style in mind.
+        </p>
+        <p class="about-body">
+          Whether you're shopping for accessories, beauty picks, or statement pieces, this is where you find them first. DM to purchase, pick up locally, or ship worldwide.
+        </p>
+        <a href="#contact" class="btn-outline" style="align-self:flex-start;border-color:rgba(255,255,255,0.4);color:rgba(255,255,255,0.8);">Get in Touch</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY SHOP -->
+<section class="section why">
+  <div class="section-inner">
+    <div class="section-header">
+      <p class="t-label" style="color:var(--accent);margin-bottom:8px;">Why Shop Here</p>
+      <h2 class="t-headline">Shopping made easy</h2>
+    </div>
+    <div class="why-layout">
+      <div class="why-big reveal-hidden">
+        <div class="why-big-icon">&#128149;</div>
+        <h3 class="why-big-title">Curated Finds, Every Drop</h3>
+        <p class="why-big-body">
+          Products selected for the Kimmy Resells collection, not randomly picked. Each item is chosen for quality, style, and value so every purchase feels intentional.
+        </p>
+        <a href="#shop" class="btn-primary" style="align-self:flex-start;">Browse the Shop</a>
+      </div>
+      <div class="why-stack">
+        <div class="why-item reveal-hidden">
+          <h4 class="why-item-title">Trending Products</h4>
+          <p class="why-item-body">A place to discover popular styles and accessories before they sell out everywhere else.</p>
+        </div>
+        <div class="why-item reveal-hidden">
+          <h4 class="why-item-title">Easy Ordering</h4>
+          <p class="why-item-body">Simple ways to connect and purchase. DM on Instagram, arrange a meetup, or ship to your door.</p>
+        </div>
+        <div class="why-item reveal-hidden">
+          <h4 class="why-item-title">GTA + Worldwide</h4>
+          <p class="why-item-body">Local meetups and Uber delivery for GTA customers. Worldwide shipping available for everyone else.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTAGRAM -->
+<section class="section instagram">
+  <div class="section-inner">
+    <div class="insta-header">
+      <div>
+        <p class="t-label" style="color:var(--accent);margin-bottom:8px;">Follow the Finds</p>
+        <h2 class="t-headline">@kimmyresells</h2>
+      </div>
+      <a href="https://www.instagram.com/kimmyresells/" target="_blank" rel="noopener" class="btn-primary">Follow on Instagram</a>
+    </div>
+    <div class="insta-tiles" id="instaTiles">
+      <!-- Populated by JS -->
+    </div>
+    <div class="insta-follow">
+      <a href="https://www.instagram.com/kimmyresells/" target="_blank" rel="noopener">
+        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        See Everything on Instagram
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- POLICIES -->
+<section class="section policies" id="policies">
+  <div class="section-inner">
+    <div class="section-header">
+      <p class="t-label" style="color:var(--accent);margin-bottom:8px;">Shop Policies</p>
+      <h2 class="t-headline">Good to know</h2>
+    </div>
+    <div class="policies-grid">
+      <div class="policy-card reveal-hidden">
+        <div class="policy-icon">&#128230;</div>
+        <h3 class="policy-title">Shipping Policy</h3>
+        <p class="policy-body">[Add your shipping policy here. Include details about processing times, carriers used, estimated delivery windows, and any shipping fees.]</p>
+      </div>
+      <div class="policy-card reveal-hidden">
+        <div class="policy-icon">&#128260;</div>
+        <h3 class="policy-title">Return Policy</h3>
+        <p class="policy-body">[Add your return policy here. Include whether returns or exchanges are accepted, any time limits, conditions for items, and how to initiate a return.]</p>
+      </div>
+      <div class="policy-card reveal-hidden">
+        <div class="policy-icon">&#128179;</div>
+        <h3 class="policy-title">Payment Policy</h3>
+        <p class="policy-body">[Add your payment policy here. Include accepted payment methods, when payment is required, e-transfer details, and any deposit requirements.]</p>
+      </div>
+      <div class="policy-card reveal-hidden">
+        <div class="policy-icon">&#128203;</div>
+        <h3 class="policy-title">Order Policy</h3>
+        <p class="policy-body">[Add your order policy here. Include how to place an order, DM instructions, hold policies, and what happens after you place your order.]</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section contact" id="contact">
+  <div class="section-inner">
+    <div class="contact-layout">
+      <div class="contact-info">
+        <h2 class="contact-headline">Let's connect</h2>
+        <p class="contact-handle">@kimmyresells</p>
+        <p class="contact-body">
+          Interested in a product, have a question, or want to arrange a meetup? Reach out on Instagram or send a message below.
+        </p>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <a href="https://www.instagram.com/kimmyresells/" target="_blank" rel="noopener" class="btn-primary" style="align-self:flex-start;">Message Us on Instagram</a>
+        </div>
+      </div>
+      <form class="contact-form" onsubmit="handleFormSubmit(event)">
+        <div class="form-group">
+          <label class="form-label" for="cf-name">Name</label>
+          <input id="cf-name" type="text" class="form-input" placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="cf-email">Email</label>
+          <input id="cf-email" type="email" class="form-input" placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="cf-insta">Instagram (optional)</label>
+          <input id="cf-insta" type="text" class="form-input" placeholder="@yourusername">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="cf-msg">Message</label>
+          <textarea id="cf-msg" class="form-input" placeholder="What are you interested in?"></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">Kimmy <span>Resells</span></div>
+        <p class="footer-tagline">Curated finds, trending pieces, and products worth having. Based in the GTA.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <span class="footer-col-title">Shop</span>
+          <a href="#shop">All Products</a>
+          <a href="#shop" data-filter-link="bags">Bags</a>
+          <a href="#shop" data-filter-link="beauty">Beauty</a>
+          <a href="#shop" data-filter-link="jewelry">Jewelry</a>
+        </div>
+        <div class="footer-col">
+          <span class="footer-col-title">Info</span>
+          <a href="#about">About</a>
+          <a href="#policies">Policies</a>
+          <a href="#contact">Contact</a>
+          <a href="https://www.instagram.com/kimmyresells/" target="_blank" rel="noopener">Instagram</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&#169; 2024 Kimmy Resells. All rights reserved.</span>
+      <a href="https://www.instagram.com/kimmyresells/" target="_blank" rel="noopener" class="footer-insta">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        @kimmyresells
+      </a>
+    </div>
+  </div>
+</footer>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modal">
+    <div class="modal-img-col">
+      <button class="modal-close" id="modalClose">&#x2715;</button>
+      <img id="modalImg" src="" alt="">
+    </div>
+    <div class="modal-content">
+      <p class="t-label modal-cat" id="modalCat"></p>
+      <h2 class="modal-name" id="modalName"></h2>
+      <div class="modal-price" id="modalPrice"></div>
+      <p class="modal-desc" id="modalDesc"></p>
+      <div class="modal-avail">
+        <span class="avail-dot" id="modalAvailDot"></span>
+        <span id="modalAvail"></span>
+      </div>
+      <div class="modal-qty">
+        <button class="qty-btn" id="qtyMinus">&#x2212;</button>
+        <span class="qty-display" id="qtyDisplay">1</span>
+        <button class="qty-btn" id="qtyPlus">&#x2B;</button>
+      </div>
+      <button class="modal-cta" onclick="window.open('https://www.instagram.com/kimmyresells/','_blank')">
+        DM to Purchase on Instagram
+      </button>
+      <p class="modal-note">Message @kimmyresells on Instagram to complete your order.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ==========================================
+   DEMO PRODUCT DATA
+   Replace these with real products before launch.
+   Each product: id, name, price, category, status,
+   description, gradient (replace with real image URLs)
+   ========================================== */
+const DEMO_PRODUCTS = [
+  {
+    id: 1,
+    name: "Pink Y2K Shoulder Bag",
+    price: 45,
+    category: "bags",
+    status: "available",
+    featured: true,
+    featuredSize: "large",
+    description: "A trendy Y2K-inspired shoulder bag in a soft blush pink. Perfect for everyday outings and effortlessly cute. [Replace with real product description.]",
+    gradient: "linear-gradient(135deg, #F2C4CF 0%, #E8A0B0 50%, #D4748A 100%)",
+    icon: "&#128092;"
+  },
+  {
+    id: 2,
+    name: "Cherry Blossom Phone Case",
+    price: 22,
+    category: "accessories",
+    status: "available",
+    featured: true,
+    featuredSize: "small",
+    description: "Delicate cherry blossom print phone case with shatterproof back. Specify your model when ordering. [Replace with real product description.]",
+    gradient: "linear-gradient(135deg, #FAE8EC 0%, #F2C4CF 50%, #E8A0B0 100%)",
+    icon: "&#127801;"
+  },
+  {
+    id: 3,
+    name: "Mini Pink Perfume",
+    price: 35,
+    category: "beauty",
+    status: "available",
+    featured: true,
+    featuredSize: "small",
+    description: "Feminine floral fragrance in a collectible mini bottle. Light, fresh, and long-lasting. [Replace with real product description.]",
+    gradient: "linear-gradient(135deg, #F9D1DB 0%, #F2B5C5 40%, #C9617A 100%)",
+    icon: "&#128141;"
+  },
+  {
+    id: 4,
+    name: "Pink Rhinestone Bracelet",
+    price: 28,
+    category: "jewelry",
+    status: "available",
+    featured: false,
+    description: "Delicate rhinestone bracelet with adjustable clasp. Catches the light beautifully. [Replace with real product description.]",
+    gradient: "linear-gradient(135deg, #FDF0F3 0%, #F2C4CF 60%, #D4748A 100%)",
+    icon: "&#128142;"
+  },
+  {
+    id: 5,
+    name: "Designer-Inspired Tote",
+    price: 65,
+    category: "bags",
+    status: "limited",
+    featured: false,
+    description: "Structured tote in a neutral tone with gold hardware. Spacious, stylish, and versatile. [Replace with real product description.]",
+    gradient: "linear-gradient(135deg, #F5E4E8 0%, #E8C4CC 50%, #C9A0A8 100%)",
+    icon: "&#128717;"
+  },
+  {
+    id: 6,
+    name: "Pink Sunglasses",
+    price: 30,
+    category: "accessories",
+    status: "available",
+    featured: false,
+    description: "Cat-eye silhouette with tinted pink lenses. UV400 protection with a chic feminine frame. [Replace with real product description.]",
+    gradient: "linear-gradient(135deg, #FAD0DC 0%, #F0A8BC 50%, #C9617A 100%)",
+    icon: "&#128584;"
+  },
+  {
+    id: 7,
+    name: "Butterfly Necklace",
+    price: 24,
+    category: "jewelry",
+    status: "available",
+    featured: false,
+    description: "Dainty butterfly pendant on a fine chain. Lightweight and perfect for layering. [Replace with real product description.]",
+    gradient: "linear-gradient(135deg, #FDE8F0 0%, #F5C4D8 50%, #E89AB8 100%)",
+    icon: "&#129419;"
+  },
+  {
+    id: 8,
+    name: "Limited Pink Hoodie",
+    price: 55,
+    category: "clothing",
+    status: "limited",
+    featured: false,
+    description: "Soft fleece hoodie in a dusty rose colorway. Relaxed fit, cozy weight. Limited quantity available. [Replace with real product description.]",
+    gradient: "linear-gradient(135deg, #F0D0D8 0%, #E0A8B8 50%, #C08090 100%)",
+    icon: "&#128149;"
+  }
+];
+
+/* Instagram tile gradients - replace with real IG post images */
+const INSTA_TILES_DATA = [
+  { gradient: "linear-gradient(135deg,#F2C4CF,#C9617A)", icon: "&#128092;" },
+  { gradient: "linear-gradient(135deg,#FAE8EC,#E8A0B0)", icon: "&#127801;" },
+  { gradient: "linear-gradient(135deg,#F9D1DB,#D4748A)", icon: "&#128141;" },
+  { gradient: "linear-gradient(135deg,#FDF0F3,#F2C4CF)", icon: "&#128142;" },
+  { gradient: "linear-gradient(135deg,#F5E4E8,#C9617A)", icon: "&#129419;" }
+];
+
+/* ==========================================
+   NAV + MOBILE MENU
+   ========================================== */
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+const menuClose = document.getElementById('menuClose');
+
+hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
+menuClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+
+document.querySelectorAll('.mobile-link').forEach(link => {
+  link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+});
+
+/* ==========================================
+   RENDER TRENDING CARDS
+   ========================================== */
+function renderTrending() {
+  const featured = DEMO_PRODUCTS.filter(p => p.featured);
+  const grid = document.getElementById('trendingGrid');
+  grid.innerHTML = featured.map((p, i) => `
+    <div class="trending-card" onclick="openModal(${p.id})" style="min-height:${i===0?'420px':'200px'};background:${p.gradient};">
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:${i===0?'5rem':'3.5rem'};opacity:0.35;">${p.icon}</div>
+      <div class="trending-card-inner">
+        <div class="trending-card-badge">Trending</div>
+        <div class="trending-card-name">${p.name}</div>
+        <div class="trending-card-price">$${p.price}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ==========================================
+   RENDER PRODUCT GRID
+   ========================================== */
+function statusLabel(s) {
+  if (s === 'available') return '<span class="product-status status-available">Available</span>';
+  if (s === 'limited')   return '<span class="product-status status-limited">Limited</span>';
+  return '<span class="product-status status-sold">Sold Out</span>';
+}
+
+function renderProducts(products) {
+  const grid = document.getElementById('productGrid');
+  grid.innerHTML = products.map(p => `
+    <div class="product-card" data-category="${p.category}" onclick="openModal(${p.id})">
+      <div class="product-img-wrap" style="background:${p.gradient};">
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:3.5rem;opacity:0.35;">${p.icon}</div>
+        ${statusLabel(p.status)}
+      </div>
+      <div class="product-info">
+        <p class="t-label product-category" style="color:var(--accent)">${p.category}</p>
+        <h3 class="product-name">${p.name}</h3>
+        <div class="product-price">$${p.price}</div>
+        <button class="product-btn">View Product</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ==========================================
+   FILTERING + SORTING
+   ========================================== */
+let currentFilter = 'all';
+
+document.getElementById('filterBar').addEventListener('click', e => {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentFilter = btn.dataset.filter;
+  applyFilterSort();
+});
+
+document.getElementById('sortSelect').addEventListener('change', applyFilterSort);
+
+function applyFilterSort() {
+  let filtered = currentFilter === 'all'
+    ? [...DEMO_PRODUCTS]
+    : DEMO_PRODUCTS.filter(p => p.category === currentFilter);
+
+  const sort = document.getElementById('sortSelect').value;
+  if (sort === 'price-asc')  filtered.sort((a,b) => a.price - b.price);
+  if (sort === 'price-desc') filtered.sort((a,b) => b.price - a.price);
+
+  renderProducts(filtered);
+}
+
+/* ==========================================
+   PRODUCT MODAL
+   ========================================== */
+let modalQty = 1;
+
+function openModal(id) {
+  const p = DEMO_PRODUCTS.find(x => x.id === id);
+  if (!p) return;
+
+  const imgCol = document.querySelector('.modal-img-col');
+  imgCol.style.background = p.gradient;
+  const modalImg = document.getElementById('modalImg');
+  modalImg.style.display = 'none';
+  let iconEl = imgCol.querySelector('.modal-icon-placeholder');
+  if (!iconEl) {
+    iconEl = document.createElement('div');
+    iconEl.className = 'modal-icon-placeholder';
+    iconEl.style.cssText = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:6rem;opacity:0.4;';
+    imgCol.appendChild(iconEl);
+  }
+  iconEl.innerHTML = p.icon;
+  document.getElementById('modalCat').textContent = p.category;
+  document.getElementById('modalName').textContent = p.name;
+  document.getElementById('modalPrice').textContent = `$${p.price}`;
+  document.getElementById('modalDesc').textContent = p.description;
+  document.getElementById('modalAvail').textContent =
+    p.status === 'available' ? 'Available now' :
+    p.status === 'limited'   ? 'Limited stock' : 'Currently sold out';
+  document.getElementById('modalAvailDot').style.background =
+    p.status === 'available' ? '#4CAF50' :
+    p.status === 'limited'   ? '#F0B429' : '#9E9E9E';
+
+  modalQty = 1;
+  document.getElementById('qtyDisplay').textContent = modalQty;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('modalClose').addEventListener('click', closeModal);
+document.getElementById('modalOverlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeModal();
+});
+
+document.getElementById('qtyMinus').addEventListener('click', () => {
+  if (modalQty > 1) { modalQty--; document.getElementById('qtyDisplay').textContent = modalQty; }
+});
+
+document.getElementById('qtyPlus').addEventListener('click', () => {
+  modalQty++;
+  document.getElementById('qtyDisplay').textContent = modalQty;
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+
+/* ==========================================
+   INSTAGRAM TILES
+   ========================================== */
+function renderInstaTiles() {
+  const container = document.getElementById('instaTiles');
+  container.innerHTML = INSTA_TILES_DATA.map(t => `
+    <a class="insta-tile" href="https://www.instagram.com/kimmyresells/" target="_blank" rel="noopener" style="background:${t.gradient};">
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:2rem;opacity:0.4;">${t.icon}</div>
+      <div class="insta-tile-overlay">&#128247;</div>
+    </a>
+  `).join('');
+}
+
+/* ==========================================
+   CONTACT FORM
+   ========================================== */
+function handleFormSubmit(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('.form-submit');
+  btn.textContent = 'Message Sent!';
+  btn.style.background = '#4CAF50';
+  setTimeout(() => {
+    btn.textContent = 'Send Message';
+    btn.style.background = '';
+    e.target.reset();
+  }, 3000);
+}
+
+/* ==========================================
+   SCROLL REVEAL
+   ========================================== */
+function initReveal() {
+  const els = document.querySelectorAll('.reveal-hidden');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(el => obs.observe(el));
+}
+
+/* ==========================================
+   FOOTER FILTER LINKS
+   ========================================== */
+document.querySelectorAll('[data-filter-link]').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const filter = link.dataset.filterLink;
+    document.querySelector(`[data-filter="${filter}"]`).click();
+    document.getElementById('shop').scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+/* ==========================================
+   INIT
+   ========================================== */
+renderTrending();
+renderProducts(DEMO_PRODUCTS);
+renderInstaTiles();
+initReveal();
+</script>
